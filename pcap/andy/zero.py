@@ -102,9 +102,9 @@ def decode_chunk(chunk):
     global record 
     record = bytearray() # init for 1st run
 
-  if chunk == 0x1f:
+  if chunk == 0x80:
     for byte in record.split():
-      print (hex(int(byte))),
+      print ((int(byte))),
     print '\n'
     record = bytearray(str(chunk)+' ') # clear the record
   else:
