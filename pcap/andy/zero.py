@@ -80,7 +80,7 @@ def read_chunk(handle):
   """read a chunk, and normalize it's representation as a
   bytearray."""
   msg = (settings.CHUNK_SIZE, handle.tell( ))
-  logger.info('start reading (bytes %s) from offset %s' % msg)
+#  logger.info('start reading (bytes %s) from offset %s' % msg)
   return bytearray(handle.read(settings.CHUNK_SIZE))
 
 def decode_chunk(chunk):
@@ -96,12 +96,25 @@ def decode_chunk(chunk):
   describing the record?
 
   """
-  hex_dump_data(chunk)
+  try:
+    record
+  except NameError:
+    global record 
+    record = bytearray() # init for 1st run
+
+  if chunk == 0x1f:
+    for byte in record.split():
+      print (hex(int(byte))),
+    print '\n'
+    record = bytearray(str(chunk)+' ') # clear the record
+  else:
+    record.extend(str(chunk)+' ')
+  
 
 def do_chunk(handle):
   """read a chunk, and call decode_chunk"""
   chunk = read_chunk(handle)
-  decode_chunk(chunk)
+  decode_chunk(chunk[3])
 
 def do_input(pathish):
   """given something that looks like a file path, try to get data
@@ -122,7 +135,7 @@ def do_input(pathish):
   # then report on how many chunks we read.
   for i in itertools.count( ):
     if pos < size:
-      logger.info('chunk: %s' % i)
+#      logger.info('chunk: %s' % i)
       do_chunk(handle)
       pos = handle.tell( )
     else:

@@ -1,0 +1,5 @@
+./zero.py --chunk 4 --prolog 0 mm_history_cmd_128_page_4.data
+INFO:insulaudit.logger:opening ['mm_history_cmd_128_page_4.data']
+INFO:insulaudit.logger:opening mm_history_cmd_128_page_4.data
+INFO:insulaudit.logger:opening mm_history_cmd_128_page_4.data (4096 bytes)
+INFO:insulaudit.logger:reading prologue (0 bytes)
