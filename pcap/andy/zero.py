@@ -102,10 +102,14 @@ def decode_chunk(chunk):
     global record 
     record = bytearray() # init for 1st run
 
-  if chunk == 0x80:
+  if chunk == 123:
     for byte in record.split():
       print ((int(byte))),
-    print '\n'
+    try:
+      rec = record.split()
+      print ' ::  index:{index} day={date} {hour}:{minute} 20{year} rate={rawrate}*25={rate}, unknown=0x{unkwn} '.format(index=int(rec[1]), hour=int(rec[4]), minute=int(rec[3]), year=int(rec[6]), date=int(rec[5]), rawrate=int(rec[8]), rate=int(rec[8])*25, unkwn=rec[7])
+    except IndexError:
+      print '\n'
     record = bytearray(str(chunk)+' ') # clear the record
   else:
     record.extend(str(chunk)+' ')
